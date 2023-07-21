@@ -12,6 +12,8 @@ function Searchbar() {
     const [listView, setListView] = useState(true)
     const [isOpen, setIsOpen] = useState(false)
     const [peopleIdx, setPeopleIdx] = useState(0)
+    const [cardType, setCardType] = useState('')
+    const [error, setError] = useState('')
 
     async function getPeople() {
         let peopleAPI = `https://swapi.dev/api/people/?search=${searchInput}`
@@ -37,14 +39,17 @@ function Searchbar() {
 
     async function getData(e) {
         e.preventDefault()
+        setError('')
         setIsLoading(true)
         const peopleData = await getPeople()
         const filmData = await getFilms()
-        
-        if(peopleData | filmData) {
-            setPeople(data.results)
-            setIsLoading(false)
-        }
+        if(!peopleData.count && !filmData.count) 
+            setError('No results found')   
+        if(peopleData)
+            setPeople(peopleData.results)
+        if(filmData)
+            setFilms(filmData.results)
+        setIsLoading(false)
     }
 
 
@@ -57,14 +62,15 @@ function Searchbar() {
         <div className='flex flex-col items-center sm:flex-row'>
             <button className='invisible sm:visible bg-white rounded-md shadow-md p-1 w-[80px] h-[2rem] hover:text-red-400 text-sm' onClick={handleFilter} type='button'> {listView ? 'List View' : 'Grid View'} </button>
             <input className='h-[2rem] text-black border-2 border-black rounded-md shadow-sm m-2 p-4 w-[18rem] sm:w-[24rem]' placeholder='Search for characters or films' onChange={(e) => {setSearchInput(e.target.value)}}></input>
-            <button className='bg-white rounded-md shadow-md p-1 w-[80px] h-[2rem] hover:text-red-400 text-sm' type='button' onClick={getData}> Search </button>
+            <button className='bg-white rounded-md shadow-md p-1 w-[80px] h-[2rem] hover:text-red-400 text-sm' type='button' onClick={(e) => getData(e)}> Search </button>
         </div>
         {isLoading && 
             <p className='text-lg mt-8 text-white'> Searching the stars... </p>
         }
-        <StarwarsCard setIsOpen={setIsOpen} listView={listView} people={people} setPeopleIdx={setPeopleIdx}/>
+        {error.length > 0 && <p className="text-white mt-12">{error}</p>}
+        <StarwarsCard setIsOpen={setIsOpen} listView={listView} people={people} films={films} setPeopleIdx={setPeopleIdx} setCardType={setCardType}/>
         {isOpen && 
-            <Modal isOpen={isOpen} setIsOpen={setIsOpen} people={people} peopleIdx={peopleIdx}/>
+            <Modal isOpen={isOpen} setIsOpen={setIsOpen} people={people} peopleIdx={peopleIdx} cardType={cardType} films={films}/>
         }
       </div>
   )
