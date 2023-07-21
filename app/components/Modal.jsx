@@ -1,21 +1,22 @@
 'use client';
 
 function Modal({setIsOpen, people, peopleIdx, cardType, films}) {
-    console.log(peopleIdx)
 
+    // close the modal 
     function handleClose() {
         setIsOpen((curr) => !curr)
     }
 
   return (
-    <div className='w-screen h-screen backdrop-blur-sm bg-white/30 fixed inset-0 flex justify-center items-center'>
-        <div className='relative flex text-black bg-gray-200 rounded-md p-12 w-2/3 h-1/2 overflow-scroll'>
+    <div className='w-screen h-screen backdrop-blur-sm fixed inset-0 flex justify-center items-center'>
+        <div className='relative flex text-black bg-white rounded-md p-12 w-1/2 h-1/2 overflow-scroll border-[0.2px] border-black '>
             <div className='m-auto'>
             <div className='flex absolute right-0 top-0 m-2 text-black border-1 border-black h-10 w-10 text-center justify-center'>
                 <button className='text-3xl' onClick={() => handleClose()}> x </button>
             </div>
-            <div className="flex flex-col justify-center items-center text-black sm:text-xl space-y-2 w-full h-full">
-                <h1 className='text-xl sm:text-2xl md:text-4xl font-extrabold'>{cardType == 'film' ?  films[(peopleIdx)].title : people[(peopleIdx)].name}</h1>
+            {/* conditionally rendering the modal details depending on the cardType (people or film)  */}
+            <div className="flex flex-col justify-center items-center sm:text-2xl space-y-2 w-full h-full">
+                <h1 className='text-md sm:text-2xl md:text-4xl font-extrabold'>{cardType == 'film' ?  films[(peopleIdx)].title : people[(peopleIdx)].name}</h1>
                 <label className="font-bold">{cardType == 'film' ? 'Title' :'Birth year'}</label>
                 <p>{cardType == 'film' ?  films[(peopleIdx)].title : people[(peopleIdx)].birth_year}</p>
                 <label className="font-bold">{cardType == 'film' ? 'Director' :'Gender'}</label>
