@@ -67,7 +67,10 @@ function Searchbar() {
     <div className='flex flex-col justify-center items-center w-fit m-12'>
         <div className='flex flex-col items-center sm:flex-row'>
             <button className='invisible sm:visible rounded-md shadow-md p-1 w-[80px] h-[2rem] hover:text-red-400 text-sm border-[0.2px] border-black' onClick={handleFilter} type='button'> {listView ? 'List View' : 'Grid View'} </button>
-            <input className='h-[2rem] text-black border-[0.2px] border-black rounded-md shadow-sm m-2 p-4 w-[18rem] sm:w-[24rem]' placeholder='Search for characters or films' onChange={(e) => {setSearchInput(e.target.value)}}></input>
+            <div className='relative flex items-center'>
+                <input className='h-[2rem] text-black border-[0.2px] border-black rounded-md shadow-sm m-2 p-4 w-[18rem] sm:w-[24rem]' type='text' value={searchInput} placeholder='Search for characters or films' onChange={(e) => {setSearchInput(e.target.value)}}></input>
+                <button className='absolute right-6 font-bold text-lg' onClick={() => setSearchInput('')}> x </button>
+            </div>
             <button className='rounded-md shadow-md p-1 w-[80px] h-[2rem] hover:text-red-400 text-sm border-[0.2px] border-black' type='button' onClick={(e) => getData(e)}> Search </button>
         </div>
         {isLoading && 
