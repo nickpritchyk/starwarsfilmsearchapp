@@ -23,7 +23,7 @@ function Modal({setIsOpen, people, peopleIdx, cardType, films}) {
                 <p>{cardType == 'film' ?  films[(peopleIdx)].director : people[(peopleIdx)].gender}</p>
                 <label className="font-bold">{cardType == 'film' ? 'Producer' :'Hair Color'}</label>
                 <p>{cardType == 'film' ?  films[(peopleIdx)].producer : people[(peopleIdx)].hair_color}</p>
-                <label className="font-bold">{cardType == 'film' ? 'Release' :'Heigh'}</label>
+                <label className="font-bold">{cardType == 'film' ? 'Release' :'Height'}</label>
                 <p>{cardType == 'film' ?  films[(peopleIdx)].release_date : people[(peopleIdx)].height}</p>
                 <label className="font-bold">{cardType == 'film' ? 'Opening Crawl' :'Mass'}</label>
                 <p className={cardType=='film' ? 'text-sm' :undefined}>{cardType == 'film' ?  films[(peopleIdx)].opening_crawl : people[(peopleIdx)].mass}</p>
